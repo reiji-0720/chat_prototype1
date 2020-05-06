@@ -1,0 +1,2 @@
+# chat_prototype1
+firestoreを使用してチャットアプリの作成。firestoreでディレクトリ構造の操作を理解することが目的
