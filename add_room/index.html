@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <h1>ルームの作成</h1>
+    <form>
+        <p>ルーム名<input id="addRoom" type="text"></p>
+        <p>メンバー<input id="makeRoomName" type="text"></p>
+
+        <button id="send" type="submit">送信</button>
+    </form>
+
+
+
+    <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-firestore.js"></script>
+    <script src="main.js"></script>
+    <script>
+        /**
+         * 
+         * ここにfirestrorの記述を書いていく
+         * 
+         * */
+
+        export function addRoom(name, owner, members) {
+            let db = firebase.firestore();
+
+            return db.collection("rooms").add({
+                name: name,
+                owner: owner,
+                members: members
+            })
+                .then(function (docRef) {
+                    let roomId = docRef.id;
+
+                    console.log("A document written with ID: ", roomId);
+
+                    // 登録したコードを追加(Svelte)
+                    let room = { id: roomId, name: name, owner: owner, members: members };
+                    _rooms = [..._rooms, room];
+                    rooms.update(list => list.concat(room));
+
+                    return room;
+                });
+        }
+
+    </script>
+</body>
+
+</html>
